@@ -12,6 +12,7 @@ module.exports = Client;
 var id = 0;
 var events = [
 	"connection",
+	"unhandled",
 	"ctcp",
 	"error",
 	"invite",
