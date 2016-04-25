@@ -309,5 +309,13 @@ module.exports = {
 		// @default  113
 		//
 		port: 113
-	}
+	},
+
+	//
+	// Run super alpha ghetto monkey-paching packages
+	//
+	// @type     array<package-name>
+	// @default  []
+	//
+	packages: [],
 };
