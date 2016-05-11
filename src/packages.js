@@ -1,5 +1,5 @@
 var EventEmitter = require("events").EventEmitter;
-var Helper = require("./helper");
+var fs = require("fs");
 var path = require("path");
 var colors = require("colors/safe");
 
@@ -20,22 +20,32 @@ Packages.prototype.forEachProp = function(prop, callback) {
 
 var packages = module.exports = new Packages();
 
-(function(config) {
-	if ("packages" in config && config.packages instanceof Array) {
-		config.packages.forEach(function(package) {
-			var folder = path.join("..", "packages", package);
-			var info = require(path.join(folder, "package.json"));
+// TODO: Should also read packages folder in user config folder
+var folder = path.resolve(path.join(__dirname, "..", "packages"));
 
-			packages.packages.push({
-				exports: require(folder),
-				info: info,
-				path: package,
-				webroot: "packages/" + package + "/",
-			});
-
-			log.info("Loaded package", colors.green(info.name + " v" + info.version));
-		});
+fs.readdir(folder, function(err, files) {
+	if (err) {
+		throw new Error(err);
 	}
-})(Helper.getConfig());
+
+	files.forEach(function(name) {
+		var packagePath = path.join(folder, name);
+
+		if (!fs.statSync(packagePath).isDirectory()) {
+			return;
+		}
+
+		var info = require(path.join(packagePath, "package.json"));
+
+		packages.packages.push({
+			exports: require(packagePath),
+			info: info,
+			path: name,
+			webroot: "packages/" + name + "/",
+		});
+
+		log.info("Loaded package", colors.green(info.name + " v" + info.version));
+	});
+});
 
 packages.emit("packagesLoaded");
