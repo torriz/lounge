@@ -61,7 +61,8 @@ function Client(manager, name, config) {
 		name: name,
 		networks: [],
 		sockets: manager.sockets,
-		manager: manager
+		manager: manager,
+		attachedClientCount: 0,
 	});
 	var client = this;
 	crypto.randomBytes(48, function(err, buf) {
@@ -220,6 +221,10 @@ Client.prototype.connect = function(args) {
 			network.channels[0].pushMessage(client, new Msg({
 				text: "Enabled capabilities: " + network.irc.network.cap.enabled.join(", ")
 			}));
+		}
+
+		if (client.attachedClientCount === 0) {
+			network.irc.raw("AWAY", "no clients attached to bouncer");
 		}
 
 		var delay = 1000;
@@ -421,3 +426,24 @@ Client.prototype.save = function(force) {
 	json.networks = networks;
 	client.manager.updateUser(client.name, json);
 };
+
+Client.prototype.clientAttach = function() {
+	if (this.attachedClientCount === 0) {
+		this.networks.forEach(function(network) {
+			network.irc.raw("AWAY");
+		});
+	}
+
+	this.attachedClientCount++;
+};
+
+Client.prototype.clientDetach = function() {
+	this.attachedClientCount--;
+
+	if (this.attachedClientCount === 0) {
+		this.networks.forEach(function(network) {
+			network.irc.raw("AWAY", "no clients attached to bouncer");
+		});
+	}
+};
+

@@ -109,6 +109,11 @@ function init(socket, client, token) {
 		socket.emit("auth");
 		socket.on("auth", auth);
 	} else {
+		socket.on("disconnect", function() {
+			client.clientDetach();
+		});
+		client.clientAttach();
+
 		socket.on(
 			"input",
 			function(data) {
