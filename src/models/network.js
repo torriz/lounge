@@ -73,10 +73,13 @@ Network.prototype.export = function() {
 		"hostname"
 	]);
 
-	network.join = _.map(
-		_.filter(this.channels, {type: "channel"}),
-		"name"
-	).join(",");
+	network.channels = _
+		.filter(this.channels, {type: "channel"})
+		.map(function(chan) {
+			return _.pick(chan, [
+				"name"
+			]);
+		});
 
 	return network;
 };

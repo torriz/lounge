@@ -139,13 +139,27 @@ Client.prototype.connect = function(args) {
 	var webirc = null;
 	var channels = [];
 
-	if (args.join) {
-		var join = args.join.replace(/\,/g, " ").split(/\s+/g);
-		join.forEach(function(chan) {
-			channels.push(new Chan({
-				name: chan
-			}));
+	if (args.channels) {
+		channels = args.channels.map(function(chan) {
+			if (!chan.name) {
+				return;
+			}
+
+			return new Chan({
+				name: chan.name
+			});
 		});
+	// `join` is kept for backwards compatibility when updating from versions <2.0
+	// also used by the "connect" window
+	} else if (args.join) {
+		channels = args.join
+			.replace(/\,/g, " ")
+			.split(/\s+/g)
+			.map(function(chan) {
+				return new Chan({
+					name: chan
+				});
+			});
 	}
 
 	var network = new Network({
