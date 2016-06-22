@@ -3,8 +3,8 @@
 	<input class="search" placeholder="{{users users.length}}" aria-label="Search among the user list">
 </div>
 {{/if}}
-<div class="names">
-	<div class="inner">
+<div class="names scrollable">
+	<div class="scrollable-content">
 		{{#diff "reset"}}{{/diff}}
 		{{#each users}}
 			{{#diff mode}}
