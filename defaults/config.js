@@ -8,7 +8,7 @@ module.exports = {
 	// @type     boolean
 	// @default  true
 	//
-	public: true,
+	public: false,
 
 	//
 	// IP address or hostname for the web server to listen on.
@@ -142,7 +142,7 @@ module.exports = {
 		// @type     string
 		// @default  "YYYY-MM-DD HH:mm:ss"
 		//
-		format: "YYYY-MM-DD HH:mm:ss",
+		format: "DD-MM-YYYY HH:mm:ss",
 
 		//
 		// Timezone
@@ -150,7 +150,7 @@ module.exports = {
 		// @type     string
 		// @default  "UTC+00:00"
 		//
-		timezone: "UTC+00:00"
+		timezone: "UTC+02:00"
 	},
 
 	//
@@ -217,7 +217,7 @@ module.exports = {
 		// @type     string
 		// @default  "lounge-user"
 		//
-		nick: "lounge-user",
+		nick: "lounge-user1337",
 
 		//
 		// Username
@@ -233,7 +233,7 @@ module.exports = {
 		// @type     string
 		// @default  "The Lounge User"
 		//
-		realname: "The Lounge User",
+		realname: "The Lounge User - https://thelounge.github.io/",
 
 		//
 		// Channels
@@ -242,7 +242,7 @@ module.exports = {
 		// @type     string
 		// @default  "#thelounge"
 		//
-		join: "#thelounge"
+		join: "#testerinos"
 	},
 
 	//
