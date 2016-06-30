@@ -32,6 +32,7 @@ var events = [
 ];
 var inputs = [
 	"ctcp",
+	"amsg",
 	"msg",
 	"part",
 	"action",
