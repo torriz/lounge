@@ -1,4 +1,4 @@
-xports.commands = ["amsg"];
+exports.commands = ["amsg"];
 
 exports.input = function(network, chan, cmd, args) {
         if (args.length === 0 || args[0] === "") {
